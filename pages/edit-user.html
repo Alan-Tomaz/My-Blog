@@ -57,16 +57,30 @@
     </nav>
 
     <body>
-        <section class="form-section ">
+        <section class="form-section-alt add-content">
             <div class="container form-section-container">
-                <h2>Add Category</h2>
+                <h2>Edit User</h2>
                 <div class="alert-message error">
                     <p>This is an error message</p>
                 </div>
                 <form action="" enctype="multipart/form-data" class="form-general">
-                    <input type="text" name="" id="" placeholder="Title">
-                    <textarea name="" id="" rows="4" placeholder="Description"></textarea>
-                    <button type="submit" class="btn">Add Category</button>
+                    <input type="text" name="" id="" placeholder="First Name">
+                    <input type="text" name="" id="" placeholder="Last Name">
+                    <input type="text" name="" id="" placeholder="Username">
+                    <input type="email" name="" id="" placeholder="E-mail">
+                    <input type="text" name="" placeholder="Location">
+                    <textarea name="" cols="20" rows="10" placeholder="Biography"></textarea>
+                    <input type="password" name="" id="" placeholder="Edit Password">
+                    <input type="password" name="" id="" placeholder="Confirm Password">
+                    <select name="" id="">
+                        <option value="0" selected>Author</option>
+                        <option value="1">Admin</option>
+                    </select>
+                    <div class="form-control">
+                        <label for="avatar">User Avatar</label>
+                        <input type="file" name="" id="avatar">
+                    </div>
+                    <button type="submit" class="btn">Edit User</button>
                 </form>
             </div>
         </section>
