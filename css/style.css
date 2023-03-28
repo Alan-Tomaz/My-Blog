@@ -808,7 +808,7 @@ footer ul a:hover {
 .individual-post-title {
     margin: 0;
     text-align: left;
-    font-size: 1.6rem;
+    font-size: 2.4rem;
     color: var(--color-white);
 }
 
@@ -1204,6 +1204,138 @@ footer ul a:hover {
     color: var(--color-white);
 }
 
+/* ============  Text Editor ============ */
+
+.text-editor-container {
+    background: var(--color-primary-dark-variant);
+}
+
+.text-editor-header {
+    background-color: rgb(21, 5, 70);
+    padding: 5px;
+
+}
+
+.text-editor-header .btn-text-editor {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    margin-right: 5px;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    color: white;
+}
+
+.text-editor-header .btn-text-editor:active {
+    color: rgba(200, 200, 200, 1);
+    outline: rgb(15, 3, 53);
+}
+
+.text-editor-content {
+    min-height: 200px;
+    border: 0;
+    padding: 20px;
+    width: 100%;
+    overflow-x: hidden;
+    color: white;
+    font-weight: normal;
+}
+
+.text-editor-content u {
+    text-decoration: underline;
+}
+
+.text-editor-content a {
+    color: #9e4aff;
+}
+
+.text-editor-content a:hover {
+    text-decoration: underline 1px solid var(--color-white-gray);
+    transition: var(--transition);
+}
+
+.text-editor-content ul,
+.text-editor-content ul li {
+    list-style: inside disc;
+}
+
+.text-editor-content ol,
+.text-editor-content ol li {
+    list-style: inside decimal;
+}
+
+.text-editor-content img {
+    width: 100%;
+    object-fit: cover;
+}
+
+#hidden-input {
+    width: 1px;
+    height: 1px;
+    background-color: transparent;
+    border: transparent;
+    resize: none;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* ============  Content Test ============ */
+
+.content-test-container {
+    min-height: 70vh;
+}
+
+.content-test-content {
+    grid-column: 1 / 5;
+
+}
+
+.content-test-title {
+    margin-bottom: 1rem;
+}
+
+
+
+.content-test-body>div img {
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.content-test-body>div a {
+    font-size: 13px;
+}
+
+.content-test-body u {
+    text-decoration: underline;
+}
+
+.content-test-body a {
+    color: #9e4aff;
+}
+
+.content-test-body a:hover {
+    text-decoration: underline 1px solid var(--color-white-gray);
+    transition: var(--transition);
+}
+
+.content-test-body ul,
+.content-test-body ul li {
+    list-style: inside disc;
+}
+
+.content-test-body ol,
+.content-test-body ol li {
+    list-style: inside decimal;
+}
+
+.content-test-body img {
+    width: 100%;
+    object-fit: cover;
+}
+
 /* ============  Profile User Page ============ */
 
 .profile-section {
@@ -1355,6 +1487,9 @@ footer ul a:hover {
 @media screen and (max-width: 1024px) {
 
     /* ============  General ============ */
+
+
+
     .container {
         width: var(--container-width-md);
     }
@@ -1573,8 +1708,10 @@ footer ul a:hover {
     }
 
     .form-section-alt {
-        padding: 0rem;
-        height: 1180px;
+        padding: 2rem 0;
+        min-height: 1180px;
+        /* height: 1180px; */
+        /* Edit */
     }
 
     /* ============  Post Pages ============ */
@@ -1729,7 +1866,9 @@ footer ul a:hover {
     }
 
     .form-section-alt {
-        height: 1180px;
+        /* height: 1180px; */
+        /* Edit */
+        padding: 5rem 0;
     }
 
     /* ======================= DASHBOARD PAGE ========================= */
@@ -1869,6 +2008,15 @@ footer ul a:hover {
         width: 100%;
         margin: 6rem 0;
         background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* ============  Text Editor ============ */
+
+    .text-editor-content img {
+        object-fit: cover;
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
     }
 
 }
