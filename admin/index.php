@@ -18,18 +18,20 @@ include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/partials/header.php';
             <a href="<?php echo ROOT_URL ?>admin/pages/manage-posts.php"><i class="uil uil-postcard"></i>
                 <h5>Manage Posts</h5>
             </a>
-            <a href="<?php echo ROOT_URL ?>admin/pages/add-user.php"><i class="uil uil-user-plus"></i>
-                <h5>Add User</h5>
-            </a>
-            <a href="<?php echo ROOT_URL ?>admin/pages/manage-users.php"><i class="uil uil-users-alt"></i>
-                <h5>Manage Users</h5>
-            </a>
-            <a href="<?php echo ROOT_URL ?>admin/pages/add-category.php"><i class="uil uil-edit"></i>
-                <h5>Add Category</h5>
-            </a>
-            <a href="<?php echo ROOT_URL ?>admin/pages/manage-categories.php"><i class="uil uil-list-ul"></i>
-                <h5>Manage Categories</h5>
-            </a>
+            <?php if (isset($_SESSION['user-is-admin'])) : ?>
+                <a href="<?php echo ROOT_URL ?>admin/pages/add-user.php"><i class="uil uil-user-plus"></i>
+                    <h5>Add User</h5>
+                </a>
+                <a href="<?php echo ROOT_URL ?>admin/pages/manage-users.php"><i class="uil uil-users-alt"></i>
+                    <h5>Manage Users</h5>
+                </a>
+                <a href="<?php echo ROOT_URL ?>admin/pages/add-category.php"><i class="uil uil-edit"></i>
+                    <h5>Add Category</h5>
+                </a>
+                <a href="<?php echo ROOT_URL ?>admin/pages/manage-categories.php"><i class="uil uil-list-ul"></i>
+                    <h5>Manage Categories</h5>
+                </a>
+            <?php endif ?>
         </div>
         <div class="profile-info">
             <h3 class="profile-title">Profile</h3>

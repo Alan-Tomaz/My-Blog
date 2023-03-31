@@ -1,5 +1,15 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/partials/header.php';
+
+//fetch  categories from database 
+$query = "SELECT * FROM categories";
+$categories = mysqli_query($connection, $query);
+
+// get back form data if there was a registration error
+$title = $_SESSION['add-post-data']['title'] ?? null; //null coalesscence operator
+$body = $_SESSION['add-post-data']['body'] ?? null;
+//delete add-posts data session
+unset($_SESSION['add-post-data']);
 ?>
 
 
@@ -7,18 +17,19 @@ include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/partials/header.php';
     <section class="form-section-alt ">
         <div class="container form-section-container">
             <h2>Add Post</h2>
-            <div class="alert-message error">
-                <p>This is an error message</p>
-            </div>
-            <form action="<?php echo ROOT_URL ?>admin/pages/content-test.php" enctype="multipart/form-data" class="form-general" method="POST">
-                <input type="text" name="title" placeholder="Title">
+            <?php if (isset($_SESSION['add-post'])) : ?>
+                <div class="alert-message error">
+                    <?= $_SESSION['add-post'];
+                    unset($_SESSION['add-post']);
+                    ?>
+                </div>
+            <?php endif ?>
+            <form action="<?php echo ROOT_URL ?>admin/pages/add-post-logic.php" enctype="multipart/form-data" class="form-general" method="POST">
+                <input type="text" name="title" value="<?= $title ?>" placeholder="Title">
                 <select name="category">
-                    <option value="1">Wild Life</option>
-                    <option value="2">Art</option>
-                    <option value="3">Travel</option>
-                    <option value="4">Music</option>
-                    <option value="5">Science and Technology</option>
-                    <option value="6">Food</option>
+                    <?php while ($category = mysqli_fetch_assoc($categories)) : ?>
+                        <option value="<?= $category['id'] ?>"><?= $category['title'] ?></option>
+                    <?php endwhile ?>
                 </select>
                 <div class="text-editor-container">
                     <div class="text-editor-header">
@@ -60,13 +71,11 @@ include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/partials/header.php';
                         </button>
                     </div>
                     <div class="text-editor-content" contenteditable="true">
+                        <?= $body ?>
                     </div>
-                    <textarea name="body" rows="0" cols="0" id="hidden-input"></textarea>
+                    <textarea name="body" rows="0" cols="0" id="hidden-input"><?= $body ?></textarea>
                 </div>
-                <div class="form-control inline">
-                    <input type="checkbox" name="is-featured" id="is-featured" checked>
-                    <label for="is-featured">Featured</label>
-                </div>
+
                 <div class="form-control">
                     <label for="thumbnail">Add Thumbnail</label>
                     <input type="file" name="thumbnail" id="thumbnail">

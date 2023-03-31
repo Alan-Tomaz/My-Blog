@@ -1,5 +1,11 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
+
+// get back form data if there was a login error
+$usernameEmail = $_SESSION["signin-data"]["username-email"] ?? null;
+$password = $_SESSION["signin-data"]["password"] ?? null;
+//delete signin data session
+unset($_SESSION['signin-data']);
 ?>
 
 <!DOCTYPE html>
@@ -25,12 +31,29 @@ include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
     <section class="form-section ">
         <div class="container form-section-container">
             <h2>Sign In</h2>
-            <div class="alert-message success">
-                <p>This is an success message</p>
-            </div>
-            <form action="<?php echo ROOT_URL ?>pages/signin-logic.php" enctype="multipart/form-data" class="form-general">
-                <input type="text" name="username-email" placeholder="Username or Email">
-                <input type="password" name="password" placeholder="Password">
+            <?php if (isset($_SESSION['signup-success'])) : ?>
+                <div class="alert-message success">
+                    <p>
+                        <?=
+                        $_SESSION['signup-success'];
+                        unset($_SESSION['signup-success']);
+                        ?>
+                    </p>
+                </div>
+            <?php elseif (isset($_SESSION['signin'])) : ?>
+                <div class="alert-message error">
+                    <p>
+                        <?=
+                        $_SESSION['signin'];
+                        unset($_SESSION['signin']);
+                        ?>
+                    </p>
+                </div>
+            <?php endif ?>
+
+            <form action="<?php echo ROOT_URL ?>pages/signin-logic.php" enctype="multipart/form-data" class="form-general" method="POST">
+                <input type="text" name="username-email" value="<?= $usernameEmail ?>" placeholder="Username or Email">
+                <input type="password" name="password" value="<?= $password ?>" placeholder="Password">
                 <button type="submit" name="submit" class="btn">Sign In</button>
                 <small>Don't have an account? <a href="<?php echo ROOT_URL ?>pages/signup.php">Sign Up</a></small>
             </form>

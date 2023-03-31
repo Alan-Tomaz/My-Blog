@@ -1,5 +1,9 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/partials/header.php';
+
+
+
+
 ?>
 
 <!-- ============== HERO SECTION ================-->

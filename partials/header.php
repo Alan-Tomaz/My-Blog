@@ -1,5 +1,13 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
+
+// fetch current user from database
+if (isset($_SESSION['user-id'])) {
+    $id = filter_var($_SESSION['user-id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $query = "SELECT avatar from users WHERE id = '$id'";
+    $result = mysqli_query($connection, $query);
+    $avatar = mysqli_fetch_assoc($result);
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,21 +48,21 @@ require $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
                 <li><a href="<?php echo ROOT_URL ?>pages/blog.php">Blog</a></li>
                 <li><a href="<?php echo ROOT_URL ?>pages/about.php">About</a></li>
                 <li><a href="<?php echo ROOT_URL ?>pages/contact.php">Contact</a></li>
-                <li><a href="<?php echo ROOT_URL ?>pages/signin.php">Sign In</a></li>
-                <li><a class="sign-up" href="<?php echo ROOT_URL ?>pages/signup.php">Sign Up</a> </li>
+                <?php if (isset($_SESSION["user-id"])) : ?>
+                    <li class="nav-profile">
+                        <div class="avatar">
+                            <img src="<?php echo ROOT_URL . 'img/' . $avatar["avatar"] ?>">
+                        </div>
+                        <ul>
+                            <li><a href="<?php echo ROOT_URL ?>admin/index.php">Dashboard</a></li>
+                            <li><a href="<?php echo ROOT_URL ?>pages/logout.php">Logout</a></li>
+                        </ul>
 
-                <!-- 
-                <li class="nav-profile">
-                    <div class="avatar">
-                        <img src="<?php echo ROOT_URL ?>img/avatar2.jpg">
-                    </div>
-                    <ul>
-                        <li><a href="<?php echo ROOT_URL ?>pages/profile.php">Dashboard</a></li>
-                        <li><a href="<?php echo ROOT_URL ?>pages/logout.php">Logout</a></li>
-                    </ul>
-
-                </li>
-                -->
+                    </li>
+                <?php else : ?>
+                    <li><a href="<?php echo ROOT_URL ?>pages/signin.php">Sign In</a></li>
+                    <li><a class="sign-up" href="<?php echo ROOT_URL ?>pages/signup.php">Sign Up</a> </li>
+                <?php endif ?>
             </ul>
             <button id="open-nav-btn"><i class="uil uil-bars"></i></button>
             <button id="close-nav-btn"><i class="uil uil-multiply"></i></button>

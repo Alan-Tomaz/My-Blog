@@ -1,5 +1,17 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
+
+// get back form data if there was a registration error
+$firstname = $_SESSION["signup-data"]["firstname"] ?? null; // null coalesscence operator
+$lastname = $_SESSION["signup-data"]["lastname"] ?? null;
+$username = $_SESSION['signup-data']['username'] ?? null;
+$email = $_SESSION["signup-data"]["email"] ?? null;
+$location = $_SESSION["signup-data"]["location"] ?? null;
+$bio = $_SESSION["signup-data"]["bio"] ?? null;
+$createPassword = $_SESSION["signup-data"]["create-password"] ?? null;
+$confirmPassword = $_SESSION["signup-data"]["confirm-password"] ?? null;
+// delete signup data session
+unset($_SESSION["signup-data"]);
 ?>
 
 <!DOCTYPE html>
@@ -25,18 +37,24 @@ include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
     <section class="form-section-alt ">
         <div class="container form-section-container">
             <h2>Sign Up</h2>
-            <div class="alert-message success">
-                <p>This is an success message</p>
-            </div>
-            <form action="<?php echo ROOT_URL ?>pages/signup-logic.php" enctype="multipart/form-data" class="form-general">
-                <input type="text" name="firstname" placeholder="First Name">
-                <input type="text" name="lastname" placeholder="Last Name">
-                <input type="text" name="username" placeholder="Username">
-                <input type="email" name="email" placeholder="E-mail">
-                <input type="text" name="location" placeholder="Location">
-                <textarea name="bio" cols="20" rows="10" placeholder="Biography"></textarea>
-                <input type="password" name="password" placeholder="Create Password">
-                <input type="password" name="confirm-password" placeholder="Confirm Password">
+            <?php if (isset($_SESSION["signup"])) : ?>
+                <div class="alert-message success">
+                    <p>
+                        <?= $_SESSION["signup"];
+                        unset($_SESSION["signup"]);
+                        ?>
+                    </p>
+                </div>
+            <?php endif ?>
+            <form action="<?php echo ROOT_URL ?>pages/signup-logic.php" enctype="multipart/form-data" class="form-general" method="POST">
+                <input type="text" name="firstname" value="<?= $firstname ?>" placeholder="First Name">
+                <input type="text" name="lastname" value="<?= $lastname ?>" placeholder="Last Name">
+                <input type="text" name="username" value="<?= $username ?>" placeholder="Username">
+                <input type="email" name="email" value="<?= $email ?>" placeholder="E-mail">
+                <input type="text" name="location" value="<?= $location ?>" placeholder="Location">
+                <textarea name="bio" cols="20" rows="10" placeholder="Biography"><?= $bio ?></textarea>
+                <input type="password" name="create-password" value="<?= $createPassword ?>" placeholder="Create Password">
+                <input type="password" name="confirm-password" value="<?= $confirmPassword ?>" placeholder="Confirm Password">
 
                 <div class="form-control">
                     <label for="avatar">User Avatar</label>

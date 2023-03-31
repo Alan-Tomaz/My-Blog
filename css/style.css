@@ -1123,15 +1123,36 @@ footer ul a:hover {
     border-radius: var(--card-border-radius-2);
 }
 
+.alert-message-manage {
+    width: var(--container-width-lg);
+}
+
+
+
 .alert-message.error {
     background: var(--color-red-light);
     color: var(--color-red);
 }
 
+.alert-message-manage.error {
+    background: hsla(346, 98%, 53%, 0.253);
+
+}
+
+
 .alert-message.success {
     background: var(--color-green-light);
     color: var(--color-green);
 }
+
+.alert-message-manage.success {
+    background: hsla(156, 100%, 38%, 0.267);
+    color: #00804d;
+
+
+
+}
+
 
 .form-general {
     display: flex;
