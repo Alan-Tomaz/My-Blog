@@ -12,19 +12,35 @@ if (isset($_GET["id"])) {
     $query = "SELECT * FROM posts WHERE id=$id";
     $result = mysqli_query($connection, $query);
     $post = mysqli_fetch_assoc($result);
-    var_dump($featuredPosts);
+
+    if (!isset($_SESSION["user-is-admin"])) {
+        if ($post["author_id"] != $_SESSION["user-id"]) {
+            header('location: ' . ROOT_URL . 'admin/index.php');
+            die();
+        }
+    }
 } else {
     header("location: " . ROOT_URL . "admin/pages/manage-posts.php");
     die();
 }
 
+
+
 ?>
 <section class="form-section-alt ">
     <div class="container form-section-container">
         <h2>Edit Post</h2>
+        <?php if (isset($_SESSION['edit-post'])) : ?>
+            <div class="alert-message error">
+                <?= $_SESSION['edit-post'];
+                unset($_SESSION['edit-post']);
+                ?>
+            </div>
+        <?php endif ?>
         <form action="<?php echo ROOT_URL ?>admin/pages/edit-post-logic.php" enctype="multipart/form-data" class="form-general" method="POST">
             <input type="hidden" name="id" value="<?= $post["id"]  ?>">
             <input type="hidden" name="previous-thumbnail-name" value="<?= $post["thumbnail"]  ?>">
+            <input type="hidden" name="was-featured" value="<?= $post["is_featured"]  ?>">
             <input type="text" name="title" placeholder="Title" value="<?= $post['title']  ?>">
 
             <select name="category">
@@ -75,10 +91,12 @@ if (isset($_GET["id"])) {
 
                 <textarea name="body" rows="0" cols="0" id="hidden-input"><?php echo (htmlspecialchars_decode($post["body"], ENT_QUOTES)) ?></textarea>
             </div>
-            <div class="form-control inline">
-                <input type="checkbox" name="is-featured" id="is-featured" value="1" checked>
-                <label for="is-featured">Featured</label>
-            </div>
+            <?php if (isset($_SESSION['user-is-admin'])) : ?>
+                <div class="form-control inline">
+                    <input type="checkbox" name="is-featured" id="is-featured" value="1" checked>
+                    <label for="is-featured">Featured</label>
+                </div>
+            <?php endif ?>
             <div class="form-control">
                 <label for="thumbnail">Change Thumbnail</label>
                 <input type="file" name="thumbnail" id="thumbnail">

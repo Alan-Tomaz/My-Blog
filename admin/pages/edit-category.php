@@ -17,6 +17,12 @@ if (isset($_GET["id"])) {
     header("location: " . ROOT_URL . "admin/pages/manage-categories.php");
     die();
 }
+
+if (!isset($_SESSION['user-is-admin'])) {
+    $_SESSION["access-not-authorized"] = "You are not authorized to access this session.";
+    header("location: " . ROOT_URL . "admin/index.php");
+    die();
+}
 ?>
 
 
@@ -24,7 +30,6 @@ if (isset($_GET["id"])) {
     <section class="form-section add-content">
         <div class="container form-section-container">
             <h2>Edit Category</h2>
-
             <form action="<?= ROOT_URL ?>admin/pages/edit-category-logic.php" enctype="multipart/form-data" class="form-general" method="POST">
                 <input type="hidden" name="id" value="<?= $category['id'] ?>">
                 <input type="text" name="title" value="<?= $category['title'] ?>" placeholder="Title">

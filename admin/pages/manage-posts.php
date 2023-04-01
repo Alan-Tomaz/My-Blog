@@ -3,10 +3,13 @@ include $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/partials/header.php';
 
 
 $currentUserId = $_SESSION["user-id"];
-$query = "SELECT id, title, category_id, is_featured FROM posts WHERE author_id = $currentUserId ORDER BY id DESC";
+if (isset($_SESSION['user-is-admin'])) {
+    $query = "SELECT id, title, category_id, author_id, is_featured FROM posts ORDER BY id DESC";
+} else {
+    $query = "SELECT id, title, category_id, is_featured FROM posts WHERE author_id = $currentUserId ORDER BY id DESC";
+}
 $posts = mysqli_query($connection, $query);
 
-var_dump($featuredPosts);
 
 ?>
 
@@ -15,7 +18,7 @@ var_dump($featuredPosts);
 <section class="profile-section">
     <?php if (isset($_SESSION['add-post-success'])) : //shows if add categories was successfully
     ?>
-        <div class="alert-message success container">
+        <div class="alert-message alert-message-manage success container">
             <p>
                 <?=
                 $_SESSION['add-post-success'];
@@ -26,7 +29,7 @@ var_dump($featuredPosts);
     <?php endif ?>
     <?php if (isset($_SESSION['edit-post-success'])) : //shows if edit categories was successfully
     ?>
-        <div class="alert-message success container">
+        <div class="alert-message alert-message-manage success container">
             <p>
                 <?=
                 $_SESSION['edit-post-success'];
@@ -36,7 +39,7 @@ var_dump($featuredPosts);
         </div>
     <?php elseif (isset($_SESSION['edit-post'])) : //shows if edit categories was not successfully
     ?>
-        <div class="alert-message error container">
+        <div class="alert-message alert-message-manage error container">
             <p>
                 <?=
                 $_SESSION['edit-post'];
@@ -47,7 +50,7 @@ var_dump($featuredPosts);
     <?php endif ?>
     <?php if (isset($_SESSION['delete-post-success'])) : //shows if delete categories was successfully
     ?>
-        <div class="alert-message success container">
+        <div class="alert-message alert-message-manage success container">
             <p>
                 <?=
                 $_SESSION['delete-post-success'];
@@ -57,7 +60,7 @@ var_dump($featuredPosts);
         </div>
     <?php elseif (isset($_SESSION['delete-post'])) : //shows if delete categories was not successfully
     ?>
-        <div class="alert-message error container">
+        <div class="alert-message  alert-message-manage error container">
             <p>
                 <?=
                 $_SESSION['delete-post'];
@@ -104,6 +107,9 @@ var_dump($featuredPosts);
                         <tr>
                             <th>Title</th>
                             <th>Category</th>
+                            <?php if (isset($_SESSION['user-is-admin'])) : ?>
+                                <th>Author</th>
+                            <?php endif ?>
                             <th>Edit</th>
                             <th>Delete</th>
                             <th>Featured</th>
@@ -117,12 +123,31 @@ var_dump($featuredPosts);
                             $categoryQuery = "SELECT title FROM categories where id=$categoryId";
                             $categoryResult = mysqli_query($connection, $categoryQuery);
                             $category = mysqli_fetch_assoc($categoryResult);
+
+                            if (isset($_SESSION['user-is-admin'])) {
+                                $authorId = $post["author_id"];
+                                $authorQuery = "SELECT * FROM users WHERE id = $authorId";
+                                $authorResult = mysqli_query($connection, $authorQuery);
+                                $author = mysqli_fetch_assoc($authorResult);
+                            }
                             ?>
                             <tr>
                                 <td><?= $post["title"] ?></td>
                                 <td><?= $category["title"] ?></td>
+                                <?php if (isset($_SESSION['user-is-admin'])) : ?>
+                                    <td><?= $author["firstname"] . " " . $author["lastname"] ?></td>
+                                <?php endif ?>
                                 <td><a href="<?php echo ROOT_URL ?>admin/pages/edit-post.php?id=<?= $post['id'] ?>" class="btn sm">Edit</a></td>
-                                <td><a href="<?php echo ROOT_URL ?>admin/pages/delete-post.php?id=<?= $post['id'] ?>" class="btn sm danger">Delete</a></td>
+                                <td><a class="btn sm danger" onclick="showConfirmMessage()">Delete</a></td>
+                                <div class="popup" id="popup">
+                                    <img src="<?= ROOT_URL ?>img/9004715_cross_delete_remove_cancel_icon.png">
+                                    <h2>Delete Page</h2>
+                                    <p>Are you sure you want to delete this post?</p>
+                                    <div class="confirmation-btn">
+                                        <a class="options-btn" id="cancel-btn" onclick="hideConfirmMessage()">Cancel</a>
+                                        <a href="<?php echo ROOT_URL ?>admin/pages/delete-post.php?id=<?= $post['id'] ?>" class="options-btn" id="ok-btn">Yes</a>
+                                    </div>
+                                </div>
                                 <td><?= $post["is_featured"] ? "Yes" : "No"  ?></td>
                             </tr>
                         <?php endwhile ?>

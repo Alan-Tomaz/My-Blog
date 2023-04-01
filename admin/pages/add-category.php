@@ -6,6 +6,12 @@ $title = $_SESSION['add-category-data']['title'] ?? null; //null coalesscence op
 $description = $_SESSION['add-category-data']['description'] ?? null;
 //delete add-categories data session
 unset($_SESSION['add-category-data']);
+
+if (!isset($_SESSION['user-is-admin'])) {
+    $_SESSION["access-not-authorized"] = "You are not authorized to access this session.";
+    header("location: " . ROOT_URL . "admin/index.php");
+    die();
+}
 ?>
 
 

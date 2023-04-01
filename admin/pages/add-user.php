@@ -12,6 +12,12 @@ $createPassword = $_SESSION['add-user-data']['create-password'] ?? null;
 $confirmPassword = $_SESSION['add-user-data']['confirm-password'] ?? null;
 //delete add-user data session
 unset($_SESSION['add-user-data']);
+
+if (!isset($_SESSION['user-is-admin'])) {
+    $_SESSION["access-not-authorized"] = "You are not authorized to access this session.";
+    header("location: " . ROOT_URL . "admin/index.php");
+    die();
+}
 ?>
 
 

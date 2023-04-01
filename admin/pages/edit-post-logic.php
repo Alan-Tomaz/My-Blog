@@ -9,15 +9,11 @@ if (isset($_POST["submit"])) {
     $body = filter_var($_POST["body"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $categoryId = filter_var($_POST["category"], FILTER_SANITIZE_NUMBER_INT);
     $isFeatured = filter_var($_POST["is-featured"], FILTER_SANITIZE_NUMBER_INT);
+    $wasFeatured = filter_var($_POST["was-featured"], FILTER_SANITIZE_NUMBER_INT);
     $thumbnail = $_FILES["thumbnail"];
 
     //set is_featured to 0 if unchecked
     $isFeatured = $isFeatured == 1 ?: 0;
-
-    //set wasfeatured to 1 if the post was featured
-    $wasFeaturedQuery = "SELECT is_featured from posts WHERE id = $id";
-    $wasFeaturedResult = mysqli_query($connection, $wasFeaturedQuery);
-    $wasFeatured = mysqli_fetch_assoc($wasFeaturedResult);
 
 
     //validate form data
@@ -65,46 +61,86 @@ if (isset($_POST["submit"])) {
     //redirect back (with form data) to edit-post page if there is any problem
     if (isset($_SESSION['edit-post'])) {
         $_SESSION["edit-post-data"] = $_POST;
-        header("location: " . ROOT_URL . "admin/pages/edit-post.php");
+        header("location: " . ROOT_URL . "admin/pages/edit-post.php?id=" . $id);
         die();
     } else {
+        //is_featured value that will be added to the table (the value is from 1 to 3)
+        $featuredPost = 0;
+
+        //if the is_featured equals 1 (the post will be a featured) it will put the oldest featured posts at the bottom of the list and the newest at the top. The oldest post will be removed from the featured posts list        if ($isFeatured == 1) {
         if ($isFeatured == 1) {
-            //Add the ID of the post to the featured posts list if this post is not there
-            //Remove the oldest Featured Post
-            addFeaturedPost($id);
-            /*if (array_search($id, $featuredPosts) == false) {
-                array_unshift($featuredPosts, $id);
-                if (sizeof($featuredPosts) > 3) {
-                    $oldFeatured = array_pop($featuredPosts);
-                    // set is_featured of the last featured posts to 0 if isFeatured for this post is 1
-                    $zeroIsFeaturedQuery = "UPDATE posts SET is_featured=0 WHERE id = $oldFeatured";
-                    $zeroIsFeaturedResult = mysqli_query($connection, $zeroIsFeaturedQuery);
-                    //use um array para armazenas os 3 posts em destaque, quando um novo post em destaque for adicionado, remova o mais velho com o array.pop e adicione o novo ao array com o array.unshift
-                    //use o comando "SELECT title FROM posts WHERE is_featured=1 ORDER BY date_time DESC LIMIT 3") para pegar todos os posts em destaque;
-                    //se um post que era destaque e estava no array for definido como não destaque use o array_search para busca-lo e unset para remove-lo do array
-                    //crie uma lógica que adapta a sessão dos posts em destaque para ser compativel com menos de 3 posts                
-                    //O ID do post em destaque só pode ser adicionado uma vez
+            if ($wasFeatured == 0) {
+                $thirdFeaturedPostQuery = "SELECT * from posts WHERE is_featured = 3";
+                $thirdFeaturedPostResult = mysqli_query($connection, $thirdFeaturedPostQuery);
+                if (mysqli_num_rows($thirdFeaturedPostResult) > 0) {
+                    $thirdFeaturedPost = mysqli_fetch_assoc($thirdFeaturedPostResult);
+                    $thirdFeaturedPostId = $thirdFeaturedPost["id"];
+                    $removeThirdFeaturedPostQuery = "UPDATE posts SET is_featured= '0' WHERE id=$thirdFeaturedPostId LIMIT 1";
+                    $removeThirdFeaturedPostResult = mysqli_query($connection, $removeThirdFeaturedPostQuery);
                 }
-                
-            }
-            */
-        }
-        if ($wasFeatured["is_featured"] == 1 && $isFeatured == 0) {
-            //Remove the ID of the post to the featured posts list if this post is there
-            removeFeaturedPost($id);
 
-            /*
-            if (($key = array_search($id, $featuredPosts)) !== false) {
-                unset($featuredPosts[$key]);
+                $secondFeaturedPostQuery = "SELECT * from posts WHERE is_featured = 2";
+                $secondFeaturedPostResult = mysqli_query($connection, $secondFeaturedPostQuery);
+                if (mysqli_num_rows($secondFeaturedPostResult) > 0) {
+                    $secondFeaturedPost = mysqli_fetch_assoc($secondFeaturedPostResult);
+                    $secondFeaturedPostId = $secondFeaturedPost["id"];
+                    $removeSecondFeaturedPostQuery = "UPDATE posts SET is_featured= '3' WHERE id=$secondFeaturedPostId LIMIT 1";
+                    $removeSecondFeaturedPostResult = mysqli_query($connection, $removeSecondFeaturedPostQuery);
+                }
+
+                $firstFeaturedPostQuery = "SELECT * from posts WHERE is_featured = 1";
+                $firstFeaturedPostResult = mysqli_query($connection, $firstFeaturedPostQuery);
+                if (mysqli_num_rows($firstFeaturedPostResult) > 0) {
+                    var_dump($firstFeaturedPostResult);
+                    $firstFeaturedPost = mysqli_fetch_assoc($firstFeaturedPostResult);
+                    $firstFeaturedPostId = $firstFeaturedPost["id"];
+                    $removeFirstFeaturedPostQuery = "UPDATE posts SET is_featured= '2' WHERE id=$firstFeaturedPostId LIMIT 1";
+                    $removeFirstFeaturedPostResult = mysqli_query($connection, $removeFirstFeaturedPostQuery);
+                }
+                $featuredPost = 1;
+            } else {
+                $featuredPost = $wasFeatured;
             }
-            */
+
+            //crie uma lógica que adapta a sessão dos posts em destaque para ser compativel com menos de 3 posts                
         }
 
+        //if a post that was featured is edited and is no longer featured this if will push the posts to the beginning of the list of featured posts so that one of the current featured posts does not happen to be removed earlier than it should when a new highlight is added
+        if ($isFeatured == 0 && $wasFeatured != 0) {
+            if ($wasFeatured == 1) {
+                $secondFeaturedPostQuery = "SELECT * from posts WHERE is_featured = 2";
+                $secondFeaturedPostResult = mysqli_query($connection, $secondFeaturedPostQuery);
+                if (mysqli_num_rows($secondFeaturedPostResult) > 0) {
+                    $secondFeaturedPost = mysqli_fetch_assoc($secondFeaturedPostResult);
+                    $secondFeaturedPostId = $secondFeaturedPost["id"];
+                    $removeSecondFeaturedPostQuery = "UPDATE posts SET is_featured= '1' WHERE id=$secondFeaturedPostId LIMIT 1";
+                    $removeSecondFeaturedPostResult = mysqli_query($connection, $removeSecondFeaturedPostQuery);
+                }
+                $thirdFeaturedPostQuery = "SELECT * from posts WHERE is_featured = 3";
+                $thirdFeaturedPostResult = mysqli_query($connection, $thirdFeaturedPostQuery);
+                if (mysqli_num_rows($thirdFeaturedPostResult) > 0) {
+                    $thirdFeaturedPost = mysqli_fetch_assoc($thirdFeaturedPostResult);
+                    $thirdFeaturedPostId = $thirdFeaturedPost["id"];
+                    $removeThirdFeaturedPostQuery = "UPDATE posts SET is_featured= '2' WHERE id=$thirdFeaturedPostId LIMIT 1";
+                    $removeThirdFeaturedPostResult = mysqli_query($connection, $removeThirdFeaturedPostQuery);
+                }
+            }
+            if ($wasFeatured == 2) {
+                $thirdFeaturedPostQuery = "SELECT * from posts WHERE is_featured = 3";
+                $thirdFeaturedPostResult = mysqli_query($connection, $thirdFeaturedPostQuery);
+                if (mysqli_num_rows($thirdFeaturedPostResult) > 0) {
+                    $thirdFeaturedPost = mysqli_fetch_assoc($thirdFeaturedPostResult);
+                    $thirdFeaturedPostId = $thirdFeaturedPost["id"];
+                    $removeThirdFeaturedPostQuery = "UPDATE posts SET is_featured= '2' WHERE id=$thirdFeaturedPostId LIMIT 1";
+                    $removeThirdFeaturedPostResult = mysqli_query($connection, $removeThirdFeaturedPostQuery);
+                }
+            }
+        }
         //set thumbnail name if a new one was uploaded, else keep old thumbnail name
         $thumbnailToInsert = $thumbnailName ?? $previousThumbnailName;
 
         //insert post into database
-        $query = "UPDATE posts SET title= '$title', body = '$body', thumbnail = '$thumbnailToInsert', category_id='$categoryId', is_featured='$isFeatured' WHERE id='$id' LIMIT 1";
+        $query = "UPDATE posts SET title= '$title', body = '$body', thumbnail = '$thumbnailToInsert', category_id='$categoryId', is_featured='$featuredPost' WHERE id='$id' LIMIT 1";
         $result = mysqli_query($connection, $query);
         if (!mysqli_errno($connection)) {
             header("location: " . ROOT_URL . "admin/pages/manage-posts.php");

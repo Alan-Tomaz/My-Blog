@@ -2,6 +2,12 @@
 
 require $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
 
+if (!isset($_SESSION['user-is-admin'])) {
+    $_SESSION["access-not-authorized"] = "You are not authorized to access this session.";
+    header("location: " . ROOT_URL . "admin/index.php");
+    die();
+}
+
 if (isset($_GET['id'])) {
 
     $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);

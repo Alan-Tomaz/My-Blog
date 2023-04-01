@@ -38,3 +38,15 @@ const HideSidebar = () => {
 
 showSidebarBtn.addEventListener('click', ShowSidebar);
 hideSidebarBtn.addEventListener('click', HideSidebar);
+
+//show a confirm message
+let popup = document.getElementById("popup");
+
+function showConfirmMessage() {
+    popup.classList.add("open-popup");
+}
+
+//hide the confirm message
+function hideConfirmMessage() {
+    popup.classList.remove("open-popup");
+}

@@ -1399,6 +1399,7 @@ footer ul a:hover {
     margin-left: 1rem;
 }
 
+
 .profile-title {
     color: var(--color-white);
     font-size: 1.6rem;
@@ -1436,6 +1437,10 @@ footer ul a:hover {
     font-size: 16px;
     font-weight: bold;
     color: var(--color-white);
+}
+
+.admin {
+    color: var(--color-green);
 }
 
 .profile-user-content>h6 {
@@ -1501,6 +1506,91 @@ footer ul a:hover {
     color: var(--color-white);
     cursor: default;
     transition: var(--transition);
+}
+
+/* confirm message style */
+.popup {
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 5;
+    visibility: hidden;
+    transition: transform 0.4s,
+        top 0.4s;
+}
+
+.open-popup {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    top: 50%;
+}
+
+.popup img {
+    width: 100px;
+    margin-top: -50px;
+    border-radius: 50px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup h2 {
+    color: black;
+    font-size: 32px;
+    font-weight: 500;
+    margin: 15px 0 10px;
+}
+
+.popup p {
+    font-weight: 500;
+}
+
+.confirmation-btn {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.confirmation-btn .options-btn {
+    width: 45%;
+    padding: 10px 0;
+    border: 0;
+    outline: none;
+    color: #f3f3f3;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.confirmation-btn .options-btn:hover {
+    opacity: 0.9;
+}
+
+.confirmation-btn .options-btn:active {
+    opacity: 1;
+}
+
+#cancel-btn {
+    background: rgb(190, 21, 21);
+
+}
+
+#ok-btn {
+    background: #67c445;
+
 }
 
 /* #region MEDIA QUERIES (MEDIA DEVICES) */
@@ -2040,6 +2130,11 @@ footer ul a:hover {
         max-width: 100%;
     }
 
+
+    /* ============  Confirmation Message ============ */
+    .popup {
+        width: 90%;
+    }
 }
 
 /* #endregion */

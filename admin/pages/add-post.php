@@ -10,6 +10,8 @@ $title = $_SESSION['add-post-data']['title'] ?? null; //null coalesscence operat
 $body = $_SESSION['add-post-data']['body'] ?? null;
 //delete add-posts data session
 unset($_SESSION['add-post-data']);
+
+
 ?>
 
 
@@ -75,7 +77,12 @@ unset($_SESSION['add-post-data']);
                     </div>
                     <textarea name="body" rows="0" cols="0" id="hidden-input"><?= $body ?></textarea>
                 </div>
-
+                <?php if (isset($_SESSION['user-is-admin'])) : ?>
+                    <div class="form-control inline">
+                        <input type="checkbox" name="is-featured" id="is-featured" value="1" checked>
+                        <label for="is-featured">Featured</label>
+                    </div>
+                <?php endif ?>
                 <div class="form-control">
                     <label for="thumbnail">Add Thumbnail</label>
                     <input type="file" name="thumbnail" id="thumbnail">

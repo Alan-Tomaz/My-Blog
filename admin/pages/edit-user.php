@@ -14,15 +14,28 @@ if (isset($_GET['id'])) {
 } else {
     header('location: ' . ROOT_URL . 'admin/pages/manage-users.php');
 }
+
+if (!isset($_SESSION['user-is-admin'])) {
+    $_SESSION["access-not-authorized"] = "You are not authorized to access this session.";
+    header("location: " . ROOT_URL . "admin/index.php");
+    die();
+}
 ?>
 
 <body>
     <section class="form-section-alt add-content">
         <div class="container form-section-container">
             <h2>Edit User</h2>
-
+            <?php if (isset($_SESSION['edit-user'])) : ?>
+                <div class="alert-message error">
+                    <?= $_SESSION['edit-user'];
+                    unset($_SESSION['edit-user']);
+                    ?>
+                </div>
+            <?php endif ?>
             <form action="<?php echo ROOT_URL ?>admin/pages/edit-user-logic.php" enctype="multipart/form-data" class="form-general" method="POST">
                 <input type="hidden" name="id" value="<?= $user["id"] ?>">
+                <input type="hidden" name="current-avatar" value="<?= $user["avatar"] ?>">
                 <input type="text" name="firstname" value="<?= $user["firstname"] ?>" placeholder="First Name">
                 <input type="text" name="lastname" value="<?= $user["lastname"] ?>" placeholder="Last Name">
                 <input type="text" name="username" value="<?= $user["username"] ?>" placeholder="Username">
