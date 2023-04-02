@@ -33,7 +33,6 @@ $query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 12";
 $posts = mysqli_query($connection, $query);
 
 ?>
-
 <!-- ============== HERO SECTION ================-->
 <section class="hero-section">
     <div class="hero-section-container">

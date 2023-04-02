@@ -113,7 +113,7 @@ if (isset($_GET["id"])) {
                                             <img src="<?php echo ROOT_URL ?>img/<?= $firstFeaturedPostAuthor["avatar"] ?>">
                                             <h6><?= $firstFeaturedPostAuthor["firstname"] . " " . $firstFeaturedPostAuthor["lastname"] ?></h6>
                                         </div>
-                                        <p><?= substr($firstFeaturedPost["subtitle"], 0, 80) ?>...</p>
+                                        <p><?= substr($firstFeaturedPost["title"], 0, 80) ?>...</p>
                                         </p>
                                     </div>
                                 </a>
@@ -140,7 +140,7 @@ if (isset($_GET["id"])) {
                                                 <img src="<?php echo ROOT_URL ?>img/<?= $secondFeaturedPostAuthor["avatar"] ?>">
                                                 <h6><?= $secondFeaturedPostAuthor["firstname"] . " " . $secondFeaturedPostAuthor["lastname"] ?></h6>
                                             </div>
-                                            <p><?= substr($secondFeaturedPost["subtitle"], 0, 80) ?>...</p>
+                                            <p><?= substr($secondFeaturedPost["title"], 0, 80) ?>...</p>
                                             </p>
                                         </div>
                                     </a>
@@ -168,7 +168,7 @@ if (isset($_GET["id"])) {
                                                 <img src="<?php echo ROOT_URL ?>img/<?= $thirdFeaturedPostAuthor["avatar"] ?>">
                                                 <h6><?= $thirdFeaturedPostAuthor["firstname"] . " " . $thirdFeaturedPostAuthor["lastname"] ?></h6>
                                             </div>
-                                            <p><?= substr($thirdFeaturedPost["subtitle"], 0, 80) ?>...</p>
+                                            <p><?= substr($thirdFeaturedPost["title"], 0, 80) ?>...</p>
                                             </p>
                                         </div>
                                     </a>
@@ -206,7 +206,7 @@ if (isset($_GET["id"])) {
                                             <img src="<?php echo ROOT_URL ?>img/<?= $newPostAuthor["avatar"] ?>">
                                             <h6><?= $newPostAuthor["firstname"] . " " . $newPostAuthor["lastname"] ?></h6>
                                         </div>
-                                        <p><?= substr($newPost["subtitle"], 0, 80) ?>...</p>
+                                        <p><?= substr($newPost["title"], 0, 80) ?>...</p>
 
 
                                     </div>

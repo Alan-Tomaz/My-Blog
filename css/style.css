@@ -2108,6 +2108,7 @@ footer ul a:hover {
 /* #region MEDIA QUERIES (SMALL DEVICES)  */
 
 @media screen and (max-width: 600px) {
+
     section {
         margin-top: 2rem;
     }
@@ -2208,7 +2209,7 @@ footer ul a:hover {
     }
 
     .featured-info {
-        margin-bottom: -50px;
+        margin-bottom: -200px;
     }
 
 
@@ -2239,13 +2240,18 @@ footer ul a:hover {
 
     .slides {
         height: 350px;
+        margin-bottom: 15rem;
     }
 
     .navigation-auto {
-        margin-top: 446px;
+        width: 90vw;
+
+        margin-top: 590px;
     }
 
     .navigation-buttons {
+        width: 90vw;
+
         margin-top: 0px;
     }
 
