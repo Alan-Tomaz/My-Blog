@@ -37,9 +37,9 @@ if (isset($_SESSION['user-id'])) {
                 <li><a href="<?php echo ROOT_URL ?>index.php" class="nav-logo">THE BLOG</a></li>
                 <li>
                     <div class="nav-search-container">
-                        <form class="nav-search" action="<?php echo ROOT_URL ?>pages/search-posts.php">
+                        <form class="nav-search" action="<?php echo ROOT_URL ?>pages/search-posts.php" method="GET">
                             <i class="uil uil-search"></i>
-                            <input type="search" placeholder="Search Posts">
+                            <input type="search" name="search" placeholder="Search Posts">
                         </form>
                     </div>
                 </li>

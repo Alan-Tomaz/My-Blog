@@ -42,7 +42,7 @@ if (isset($_GET["id"])) {
             <input type="hidden" name="previous-thumbnail-name" value="<?= $post["thumbnail"]  ?>">
             <input type="hidden" name="was-featured" value="<?= $post["is_featured"]  ?>">
             <input type="text" name="title" placeholder="Title" value="<?= $post['title']  ?>">
-
+            <textarea name="subtitle" rows="5" placeholder="Subtitle"><?= $post['subtitle']  ?></textarea>
             <select name="category">
                 <?php while ($category = mysqli_fetch_assoc($categories)) : ?>
                     <option value="<?= $category["id"] ?>"><?= $category["title"] ?></option>

@@ -6,6 +6,7 @@ if (isset($_POST["submit"])) {
     $id = filter_var($_POST["id"], FILTER_SANITIZE_NUMBER_INT);
     $previousThumbnailName = filter_var($_POST["previous-thumbnail-name"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $title = filter_var($_POST["title"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $subtitle = filter_var($_POST["subtitle"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $body = filter_var($_POST["body"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $categoryId = filter_var($_POST["category"], FILTER_SANITIZE_NUMBER_INT);
     $isFeatured = filter_var($_POST["is-featured"], FILTER_SANITIZE_NUMBER_INT);
@@ -19,6 +20,9 @@ if (isset($_POST["submit"])) {
     //validate form data
     if (!$title) {
         $_SESSION["edit-post"] = "Enter Post Title";
+    }
+    if (!$subtitle) {
+        $_SESSION["edit-post"] = "Enter Post Subtitle";
     } elseif (!$body) {
         $_SESSION["edit-post"] = "Enter Post Body";
     } elseif (!$categoryId) {
@@ -140,7 +144,7 @@ if (isset($_POST["submit"])) {
         $thumbnailToInsert = $thumbnailName ?? $previousThumbnailName;
 
         //insert post into database
-        $query = "UPDATE posts SET title= '$title', body = '$body', thumbnail = '$thumbnailToInsert', category_id='$categoryId', is_featured='$featuredPost' WHERE id='$id' LIMIT 1";
+        $query = "UPDATE posts SET title= '$title', subtitle = '$subtitle', body = '$body', thumbnail = '$thumbnailToInsert', category_id='$categoryId', is_featured='$featuredPost' WHERE id='$id' LIMIT 1";
         $result = mysqli_query($connection, $query);
         if (!mysqli_errno($connection)) {
             header("location: " . ROOT_URL . "admin/pages/manage-posts.php");

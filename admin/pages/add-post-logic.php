@@ -5,6 +5,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/My Blog/admin/config/database.php';
 if (isset($_POST["submit"])) {
     $authorId = $_SESSION["user-id"];
     $title = filter_var($_POST["title"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $subtitle = filter_var($_POST["subtitle"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $body = filter_var($_POST["body"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $categoryId = filter_var($_POST["category"], FILTER_SANITIZE_NUMBER_INT);
     $isFeatured = filter_var($_POST["is-featured"], FILTER_SANITIZE_NUMBER_INT);
@@ -18,6 +19,9 @@ if (isset($_POST["submit"])) {
     //validate form data
     if (!$title) {
         $_SESSION["add-post"] = "Enter Post Title";
+    }
+    if (!$subtitle) {
+        $_SESSION["add-post"] = "Enter Post Subtitle";
     } elseif (!$body) {
         $_SESSION["add-post"] = "Enter Post Body";
     } elseif (!$categoryId) {
@@ -93,7 +97,7 @@ if (isset($_POST["submit"])) {
         }
 
         //insert post into database
-        $query = "INSERT INTO posts (title, body, thumbnail, category_id, author_id, is_featured) VALUES ('$title', '$body', '$thumbnailName', $categoryId, $authorId, $featuredPost)";
+        $query = "INSERT INTO posts (title, subtitle, body, thumbnail, category_id, author_id, is_featured) VALUES ('$title', '$subtitle', '$body', '$thumbnailName', $categoryId, $authorId, $featuredPost)";
         $result = mysqli_query($connection, $query);
         if (!mysqli_errno($connection)) {
             $_SESSION["add-post-success"] = "New Post Added Successfully";

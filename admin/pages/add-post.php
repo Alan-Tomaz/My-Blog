@@ -7,6 +7,7 @@ $categories = mysqli_query($connection, $query);
 
 // get back form data if there was a registration error
 $title = $_SESSION['add-post-data']['title'] ?? null; //null coalesscence operator
+$subtitle = $_SESSION['add-post-data']['subtitle'] ?? null; //null coalesscence operator
 $body = $_SESSION['add-post-data']['body'] ?? null;
 //delete add-posts data session
 unset($_SESSION['add-post-data']);
@@ -28,6 +29,7 @@ unset($_SESSION['add-post-data']);
             <?php endif ?>
             <form action="<?php echo ROOT_URL ?>admin/pages/add-post-logic.php" enctype="multipart/form-data" class="form-general" method="POST">
                 <input type="text" name="title" value="<?= $title ?>" placeholder="Title">
+                <textarea name="subtitle" rows="5" placeholder="Subtitle"><?= $subtitle  ?></textarea>
                 <select name="category">
                     <?php while ($category = mysqli_fetch_assoc($categories)) : ?>
                         <option value="<?= $category['id'] ?>"><?= $category['title'] ?></option>
