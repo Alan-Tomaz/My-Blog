@@ -40,13 +40,15 @@ showSidebarBtn.addEventListener('click', ShowSidebar);
 hideSidebarBtn.addEventListener('click', HideSidebar);
 
 //show a confirm message
-let popup = document.getElementById("popup");
+let popup = [];
 
-function showConfirmMessage() {
-    popup.classList.add("open-popup");
+function showConfirmMessage(i) {
+    popup[i] = document.getElementById("popup" + i);
+    popup[i].classList.add("open-popup");
 }
 
 //hide the confirm message
-function hideConfirmMessage() {
-    popup.classList.remove("open-popup");
+function hideConfirmMessage(i) {
+    popup[i] = document.getElementById("popup" + i);
+    popup[i].classList.remove("open-popup");
 }

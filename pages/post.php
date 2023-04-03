@@ -39,8 +39,9 @@ if (isset($_GET["id"])) {
                     $authorResult = mysqli_query($connection, $authorQuery);
                     $author = mysqli_fetch_assoc($authorResult);
                     ?>
-                    <img src="<?php echo ROOT_URL ?>img/<?= $author["avatar"] ?>">
-
+                    <div class="individual-post-author-img">
+                        <img src="<?php echo ROOT_URL ?>img/<?= $author["avatar"] ?>">
+                    </div>
                     <div class="individual-post-author-info">
                         <h5>By: <?= $author["firstname"] . " " . $author["lastname"] ?></h5>
                         <small><?= date("M d, Y - H:i", strtotime($post["date_time"])) ?></small>
@@ -67,7 +68,9 @@ if (isset($_GET["id"])) {
                 <div class="individual-post-sidebar-author">
 
                     <h6 class="individual-post-sidebar-section-title">Author</h6>
-                    <img src="<?php echo ROOT_URL ?>img/<?= $author["avatar"] ?>">
+                    <div class="individual-post-sidebar-author-img">
+                        <img src="<?php echo ROOT_URL ?>img/<?= $author["avatar"] ?>">
+                    </div>
                     <div class="individual-post-sidebar-author-info">
                         <h6 class="individual-post-sidebar-author-name"><?= $author["firstname"] . " " . $author["lastname"] ?></h6>
                         <span class="individual-post-sidebar-author-location"><i class="uil uil-location-point"></i><?= $author["location"] ?></span>
@@ -110,7 +113,9 @@ if (isset($_GET["id"])) {
                                             $firstFeaturedPostAuthorResult = mysqli_query($connection, $firstFeaturedPostAuthorQuery);
                                             $firstFeaturedPostAuthor = mysqli_fetch_assoc($firstFeaturedPostAuthorResult);
                                             ?>
-                                            <img src="<?php echo ROOT_URL ?>img/<?= $firstFeaturedPostAuthor["avatar"] ?>">
+                                            <div class="sidebar-post-author-img">
+                                                <img src="<?php echo ROOT_URL ?>img/<?= $firstFeaturedPostAuthor["avatar"] ?>">
+                                            </div>
                                             <h6><?= $firstFeaturedPostAuthor["firstname"] . " " . $firstFeaturedPostAuthor["lastname"] ?></h6>
                                         </div>
                                         <p><?= substr($firstFeaturedPost["title"], 0, 80) ?>...</p>
@@ -137,7 +142,10 @@ if (isset($_GET["id"])) {
                                                 $secondFeaturedPostAuthorResult = mysqli_query($connection, $secondFeaturedPostAuthorQuery);
                                                 $secondFeaturedPostAuthor = mysqli_fetch_assoc($secondFeaturedPostAuthorResult);
                                                 ?>
-                                                <img src="<?php echo ROOT_URL ?>img/<?= $secondFeaturedPostAuthor["avatar"] ?>">
+                                                <div class="sidebar-post-author-img">
+
+                                                    <img src="<?php echo ROOT_URL ?>img/<?= $secondFeaturedPostAuthor["avatar"] ?>">
+                                                </div>
                                                 <h6><?= $secondFeaturedPostAuthor["firstname"] . " " . $secondFeaturedPostAuthor["lastname"] ?></h6>
                                             </div>
                                             <p><?= substr($secondFeaturedPost["title"], 0, 80) ?>...</p>
@@ -165,7 +173,10 @@ if (isset($_GET["id"])) {
                                                 $thirdFeaturedPostAuthorResult = mysqli_query($connection, $thirdFeaturedPostAuthorQuery);
                                                 $thirdFeaturedPostAuthor = mysqli_fetch_assoc($thirdFeaturedPostAuthorResult);
                                                 ?>
-                                                <img src="<?php echo ROOT_URL ?>img/<?= $thirdFeaturedPostAuthor["avatar"] ?>">
+                                                <div class="sidebar-post-author-img">
+
+                                                    <img src="<?php echo ROOT_URL ?>img/<?= $thirdFeaturedPostAuthor["avatar"] ?>">
+                                                </div>
                                                 <h6><?= $thirdFeaturedPostAuthor["firstname"] . " " . $thirdFeaturedPostAuthor["lastname"] ?></h6>
                                             </div>
                                             <p><?= substr($thirdFeaturedPost["title"], 0, 80) ?>...</p>
@@ -203,7 +214,10 @@ if (isset($_GET["id"])) {
                                             $newPostAuthorResult = mysqli_query($connection, $newPostAuthorQuery);
                                             $newPostAuthor = mysqli_fetch_assoc($newPostAuthorResult);
                                             ?>
-                                            <img src="<?php echo ROOT_URL ?>img/<?= $newPostAuthor["avatar"] ?>">
+                                            <div class="sidebar-post-author-img">
+
+                                                <img src="<?php echo ROOT_URL ?>img/<?= $newPostAuthor["avatar"] ?>">
+                                            </div>
                                             <h6><?= $newPostAuthor["firstname"] . " " . $newPostAuthor["lastname"] ?></h6>
                                         </div>
                                         <p><?= substr($newPost["title"], 0, 80) ?>...</p>

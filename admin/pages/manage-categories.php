@@ -7,6 +7,8 @@ $currentAdminId = $_SESSION['user-id'];
 $query = "SELECT * FROM categories ORDER BY title";
 $categories = mysqli_query($connection, $query);
 
+
+$i = 1;
 if (!isset($_SESSION['user-is-admin'])) {
     $_SESSION["access-not-authorized"] = "You are not authorized to access this session.";
     header("location: " . ROOT_URL . "admin/index.php");
@@ -126,17 +128,20 @@ if (!isset($_SESSION['user-is-admin'])) {
                             <tr>
                                 <td><?= $category['title'] ?></td>
                                 <td><a href="<?= ROOT_URL ?>admin/pages/edit-category.php?id=<?= $category['id'] ?>" class="btn sm">Edit</a></td>
-                                <td><a onclick="showConfirmMessage()" class="btn sm danger">Delete</a></td>
-                                <div class="popup" id="popup">
+                                <td><a onclick="showConfirmMessage(<?= $i ?>)" class="btn sm danger">Delete</a></td>
+                                <div class="popup" id="popup<?= $i ?>">
                                     <img src="<?= ROOT_URL ?>img/9004715_cross_delete_remove_cancel_icon.png">
                                     <h2>Delete Category</h2>
-                                    <p>Are you sure you want to delete this category?</p>
+                                    <p>Are you sure you want to delete the <?= $category["title"] ?> category?</p>
                                     <div class="confirmation-btn">
-                                        <a class="options-btn" id="cancel-btn" onclick="hideConfirmMessage()">Cancel</a>
+                                        <a class="options-btn" id="cancel-btn" onclick="hideConfirmMessage(<?= $i ?>)">Cancel</a>
                                         <a href="<?= ROOT_URL ?>admin/pages/delete-category.php?id=<?= $category['id'] ?>" class="options-btn" id="ok-btn">Yes</a>
                                     </div>
                                 </div>
                             </tr>
+                            <?php
+                            $i++
+                            ?>
                         <?php endwhile ?>
 
                     </tbody>

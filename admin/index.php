@@ -79,7 +79,9 @@ $email = $user["email"];
             <h3 class="profile-title">Profile</h3>
             <div class="profile-user">
                 <div class="profile-user-info">
-                    <img src="<?php echo ROOT_URL . 'img/' . $avatar ?>">
+                    <div class="profile-user-avatar">
+                        <img src="<?php echo ROOT_URL . 'img/' . $avatar ?>">
+                    </div>
                     <div class="profile-user-content">
                         <h5 class="user-name">
                             <?= $name ?>

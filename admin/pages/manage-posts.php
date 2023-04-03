@@ -9,7 +9,7 @@ if (isset($_SESSION['user-is-admin'])) {
     $query = "SELECT id, title, category_id, is_featured FROM posts WHERE author_id = $currentUserId ORDER BY id DESC";
 }
 $posts = mysqli_query($connection, $query);
-
+$i = 1;
 
 ?>
 
@@ -138,18 +138,21 @@ $posts = mysqli_query($connection, $query);
                                     <td><?= $author["firstname"] . " " . $author["lastname"] ?></td>
                                 <?php endif ?>
                                 <td><a href="<?php echo ROOT_URL ?>admin/pages/edit-post.php?id=<?= $post['id'] ?>" class="btn sm">Edit</a></td>
-                                <td><a class="btn sm danger" onclick="showConfirmMessage()">Delete</a></td>
-                                <div class="popup" id="popup">
+                                <td><a class="btn sm danger" onclick="showConfirmMessage(<?= $i ?>)">Delete</a></td>
+                                <div class="popup" id="popup<?= $i ?>">
                                     <img src="<?= ROOT_URL ?>img/9004715_cross_delete_remove_cancel_icon.png">
                                     <h2>Delete Page</h2>
                                     <p>Are you sure you want to delete this post?</p>
                                     <div class="confirmation-btn">
-                                        <a class="options-btn" id="cancel-btn" onclick="hideConfirmMessage()">Cancel</a>
+                                        <a class="options-btn" id="cancel-btn" onclick="hideConfirmMessage(<?= $i ?>)">Cancel</a>
                                         <a href="<?php echo ROOT_URL ?>admin/pages/delete-post.php?id=<?= $post['id'] ?>" class="options-btn" id="ok-btn">Yes</a>
                                     </div>
                                 </div>
                                 <td><?= $post["is_featured"] ? "Yes" : "No"  ?></td>
                             </tr>
+                            <?php
+                            $i++
+                            ?>
                         <?php endwhile ?>
 
 

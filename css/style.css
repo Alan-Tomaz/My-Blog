@@ -476,6 +476,7 @@ nav button {
 
 .post-thumbnail {
     height: fit-content;
+    max-height: 100%;
     border-radius: var(--card-border-radius-5) 0;
     border: 0.6rem solid var(--color-primary-variant);
     overflow: hidden;
@@ -484,6 +485,7 @@ nav button {
 }
 
 .post-thumbnail a img {
+    width: 100%;
     height: 100%;
     object-fit: cover;
 }
@@ -767,9 +769,9 @@ footer ul a:hover {
 }
 
 .new-post-author-avatar {
-    width: 2rem;
-    height: 2.2em;
-    border-radius: var(--card-border-radius-5);
+    max-width: 2.1rem;
+    max-height: 2.1rem;
+    border-radius: var(--card-border-radius-all);
     overflow: hidden;
 }
 
@@ -993,9 +995,11 @@ footer ul a:hover {
     gap: 0.5rem;
 }
 
-.individual-post-author img {
-    width: 3.5rem;
+.individual-post-author-img {
+    max-width: 3.5rem;
+    max-height: 3.5rem;
     border-radius: var(--card-border-radius-2);
+    overflow: hidden;
 }
 
 .individual-post-author-info {
@@ -1112,9 +1116,11 @@ footer ul a:hover {
     gap: 0.5rem 0;
 }
 
-.individual-post-sidebar-author>img {
-    width: 6rem;
+.individual-post-sidebar-author-img {
+    max-width: 7rem;
+    max-height: 7rem;
     border-radius: var(--card-border-radius-all);
+    overflow: hidden;
 }
 
 .individual-post-sidebar-author-info {
@@ -1200,11 +1206,13 @@ footer ul a:hover {
     gap: 0.5rem;
 }
 
-.sidebar-post-author>img {
-    width: 1.3rem;
-    height: 1.3rem;
+.sidebar-post-author-img {
+    max-width: 1.5rem;
+    max-height: 1.5rem;
     border-radius: var(--card-border-radius-all);
     outline: 2px var(--color-black) solid;
+    overflow: hidden;
+
 }
 
 .sidebar-post-author>h6 {
@@ -1658,12 +1666,22 @@ footer ul a:hover {
     justify-content: start;
     align-items: start;
     gap: 1rem;
+
 }
 
-.profile-user-info>img {
+.profile-user-avatar {
+
     width: 7rem;
+    height: 7rem;
     border-radius: var(--card-border-radius-all);
     outline: 2px solid var(--color-white-gray);
+    overflow: hidden;
+}
+
+.profile-user-avatar img {
+    width: 100%;
+    object-fit: cover;
+
 }
 
 .profile-user-content {
