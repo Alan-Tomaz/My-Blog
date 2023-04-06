@@ -126,7 +126,7 @@ if (!isset($_SESSION['user-is-admin'])) {
                     <tbody>
                         <?php while ($category = mysqli_fetch_assoc($categories)) : ?>
                             <tr>
-                                <td><?= $category['title'] ?></td>
+                                <td> <a class="user-page-link" href="<?= ROOT_URL ?>pages/category-posts.php?category=<?= $category["id"] ?>"><?= $category['title'] ?></a></td>
                                 <td><a href="<?= ROOT_URL ?>admin/pages/edit-category.php?id=<?= $category['id'] ?>" class="btn sm">Edit</a></td>
                                 <td><a onclick="showConfirmMessage(<?= $i ?>)" class="btn sm danger">Delete</a></td>
                                 <div class="popup" id="popup<?= $i ?>">

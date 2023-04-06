@@ -120,9 +120,9 @@ if (!isset($_SESSION['user-is-admin'])) {
                         <?php while ($user = mysqli_fetch_assoc($users)) : ?>
 
                             <tr>
-                                <td><?= "{$user['firstname']} {$user['lastname']}" ?></td>
-                                <td><?= $user['username'] ?></td>
-                                <td><?= $user['email'] ?></td>
+                                <td><a class="user-page-link" href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $user["username"] ?>"><?= "{$user['firstname']} {$user['lastname']}" ?></a></td>
+                                <td><a class="user-page-link" href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $user["username"] ?>"><?= $user['username'] ?></a></td>
+                                <td><a class="user-page-link" href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $user["username"] ?>"><?= $user['email'] ?></a></td>
                                 <td><a href="<?php echo ROOT_URL ?>admin/pages/edit-user.php?id=<?= $user['id'] ?>" class="btn sm">Edit</a></td>
                                 <td><a onclick="showConfirmMessage(<?= $i ?>)" class="btn sm danger">Delete</a></td>
                                 <div class="popup" id="popup<?= $i ?>">

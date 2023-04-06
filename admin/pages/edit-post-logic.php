@@ -147,6 +147,7 @@ if (isset($_POST["submit"])) {
         $query = "UPDATE posts SET title= '$title', subtitle = '$subtitle', body = '$body', thumbnail = '$thumbnailToInsert', category_id='$categoryId', is_featured='$featuredPost' WHERE id='$id' LIMIT 1";
         $result = mysqli_query($connection, $query);
         if (!mysqli_errno($connection)) {
+            $_SESSION["edit-post-success"] = "Post Successfully Updated";
             header("location: " . ROOT_URL . "admin/pages/manage-posts.php");
             die();
         }

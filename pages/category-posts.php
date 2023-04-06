@@ -70,15 +70,15 @@ $postsResult = mysqli_query($connection, $postsQuery);
         <div class="container new-posts-page-container categories-posts-page-container">
             <?php while ($post = mysqli_fetch_assoc($postsResult)) : ?>
                 <article class="new-post category-post">
-                    <a href="<?= ROOT_URL ?>pages/post.php?id=<?= $post["id"] ?>">
+                    <?php
+                    //fetch author from users table using author_id
+                    $authorId = $post["author_id"];
+                    $authorQuery = "SELECT * FROM users WHERE id = $authorId";
+                    $authorResult = mysqli_query($connection, $authorQuery);
+                    $author = mysqli_fetch_assoc($authorResult);
+                    ?>
+                    <a href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $author["username"] ?>">
                         <div class=" new-post-author categories-post-author">
-                            <?php
-                            //fetch author from users table using author_id
-                            $authorId = $post["author_id"];
-                            $authorQuery = "SELECT * FROM users WHERE id = $authorId";
-                            $authorResult = mysqli_query($connection, $authorQuery);
-                            $author = mysqli_fetch_assoc($authorResult);
-                            ?>
                             <div class="new-post-author-avatar category-post-author-avatar">
                                 <img src="<?php echo ROOT_URL ?>img/<?= $author["avatar"] ?>">
                             </div>

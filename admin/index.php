@@ -102,6 +102,9 @@ $email = $user["email"];
                 <h1 class="profile-bio-title">Biography</h1>
                 <p><?= substr($bio, 0, 1000) ?></p>
             </div>
+            <a class="public-profile-btn btn" href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $user["username"] ?>" style="margin-top: 1rem;">
+                View Public Profile
+            </a>
         </div>
     </div>
 </section>

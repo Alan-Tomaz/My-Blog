@@ -91,16 +91,16 @@ $posts = mysqli_query($connection, $query);
                                 <a href="<?php echo ROOT_URL ?>pages/post.php?id=<?= $firstFeaturedPost["id"] ?>">
                                     <p class="featured-paragraph"><?= substr($firstFeaturedPost["subtitle"], 0, 300) ?>...</p>
                                 </a>
-                                <a href="<?php echo ROOT_URL ?>pages/post.php?id=<?= $firstFeaturedPost["id"] ?>">
-
+                                <?php
+                                //fetch author from users table using author_id
+                                $firstFeaturedPostAuthorId = $firstFeaturedPost["author_id"];
+                                $firstFeaturedPostAuthorQuery = "SELECT * FROM users WHERE id = $firstFeaturedPostAuthorId";
+                                $firstFeaturedPostAuthorResult = mysqli_query($connection, $firstFeaturedPostAuthorQuery);
+                                $firstFeaturedPostAuthor = mysqli_fetch_assoc($firstFeaturedPostAuthorResult);
+                                ?>
+                                <a href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $firstFeaturedPostAuthor["username"] ?>">
                                     <div class="post-author">
-                                        <?php
-                                        //fetch author from users table using author_id
-                                        $firstFeaturedPostAuthorId = $firstFeaturedPost["author_id"];
-                                        $firstFeaturedPostAuthorQuery = "SELECT * FROM users WHERE id = $firstFeaturedPostAuthorId";
-                                        $firstFeaturedPostAuthorResult = mysqli_query($connection, $firstFeaturedPostAuthorQuery);
-                                        $firstFeaturedPostAuthor = mysqli_fetch_assoc($firstFeaturedPostAuthorResult);
-                                        ?>
+
                                         <div class="post-author-avatar">
                                             <img src="<?php echo ROOT_URL ?>img/<?= $firstFeaturedPostAuthor["avatar"] ?>">
                                         </div>
@@ -139,16 +139,16 @@ $posts = mysqli_query($connection, $query);
                                     <a href="<?php echo ROOT_URL ?>pages/post.php?id=<?= $secondFeaturedPost["id"] ?>">
                                         <p class="featured-paragraph"><?= substr($secondFeaturedPost["subtitle"], 0, 300) ?>...</p>
                                     </a>
-                                    <a href="<?php echo ROOT_URL ?>pages/post.php?<?= $secondFeaturedPost["id"] ?>">
-
+                                    <?php
+                                    //fetch author from users table using author_id
+                                    $secondFeaturedPostAuthorId = $secondFeaturedPost["author_id"];
+                                    $secondFeaturedPostAuthorQuery = "SELECT * FROM users WHERE id = $secondFeaturedPostAuthorId";
+                                    $secondFeaturedPostAuthorResult = mysqli_query($connection, $secondFeaturedPostAuthorQuery);
+                                    $secondFeaturedPostAuthor = mysqli_fetch_assoc($secondFeaturedPostAuthorResult);
+                                    ?>
+                                    <a href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $secondFeaturedPostAuthor["username"] ?>">
                                         <div class="post-author">
-                                            <?php
-                                            //fetch author from users table using author_id
-                                            $secondFeaturedPostAuthorId = $secondFeaturedPost["author_id"];
-                                            $secondFeaturedPostAuthorQuery = "SELECT * FROM users WHERE id = $secondFeaturedPostAuthorId";
-                                            $secondFeaturedPostAuthorResult = mysqli_query($connection, $secondFeaturedPostAuthorQuery);
-                                            $secondFeaturedPostAuthor = mysqli_fetch_assoc($secondFeaturedPostAuthorResult);
-                                            ?>
+
                                             <div class="post-author-avatar">
                                                 <img src="<?php echo ROOT_URL ?>img/<?= $secondFeaturedPostAuthor["avatar"] ?>">
                                             </div>
@@ -189,16 +189,17 @@ $posts = mysqli_query($connection, $query);
                                     <a href="<?php echo ROOT_URL ?>pages/post.php?id=<?= $thirdFeaturedPost["id"] ?>">
                                         <p class="featured-paragraph"><?= substr($thirdFeaturedPost["subtitle"], 0, 300) ?>...</p>
                                     </a>
-                                    <a href="<?php echo ROOT_URL ?>pages/post.php?id=<?= $thirdFeaturedPost["id"] ?>">
+                                    <?php
+                                    //fetch author from users table using author_id
+                                    $thirdFeaturedPostAuthorId = $thirdFeaturedPost["author_id"];
+                                    $thirdFeaturedPostAuthorQuery = "SELECT * FROM users WHERE id = $thirdFeaturedPostAuthorId";
+                                    $thirdFeaturedPostAuthorResult = mysqli_query($connection, $thirdFeaturedPostAuthorQuery);
+                                    $thirdFeaturedPostAuthor = mysqli_fetch_assoc($thirdFeaturedPostAuthorResult);
+                                    ?>
+                                    <a href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $thirdFeaturedPostAuthor["username"] ?>">
 
                                         <div class="post-author">
-                                            <?php
-                                            //fetch author from users table using author_id
-                                            $thirdFeaturedPostAuthorId = $thirdFeaturedPost["author_id"];
-                                            $thirdFeaturedPostAuthorQuery = "SELECT * FROM users WHERE id = $thirdFeaturedPostAuthorId";
-                                            $thirdFeaturedPostAuthorResult = mysqli_query($connection, $thirdFeaturedPostAuthorQuery);
-                                            $thirdFeaturedPostAuthor = mysqli_fetch_assoc($thirdFeaturedPostAuthorResult);
-                                            ?>
+
                                             <div class="post-author-avatar">
                                                 <img src="<?php echo ROOT_URL ?>img/<?= $thirdFeaturedPostAuthor["avatar"] ?>">
                                             </div>
@@ -262,15 +263,15 @@ $posts = mysqli_query($connection, $query);
             <?php while ($post = mysqli_fetch_assoc($posts)) : ?>
 
                 <article class="new-post category-post">
-                    <a href="<?php echo ROOT_URL ?>pages/post.php?id=<?= $post["id"] ?>">
+                    <?php
+                    //fetch author from users table using author_id
+                    $authorId = $post["author_id"];
+                    $authorQuery = "SELECT * FROM users WHERE id = $authorId";
+                    $authorResult = mysqli_query($connection, $authorQuery);
+                    $author = mysqli_fetch_assoc($authorResult);
+                    ?>
+                    <a href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $author["username"] ?>">
                         <div class="new-post-author home-page-new-post-author">
-                            <?php
-                            //fetch author from users table using author_id
-                            $authorId = $post["author_id"];
-                            $authorQuery = "SELECT * FROM users WHERE id = $authorId";
-                            $authorResult = mysqli_query($connection, $authorQuery);
-                            $author = mysqli_fetch_assoc($authorResult);
-                            ?>
                             <div class="new-post-author-avatar category-post-author-avatar">
                                 <img src="<?php echo ROOT_URL ?>img/<?= $author["avatar"] ?>">
                             </div>
@@ -290,7 +291,7 @@ $posts = mysqli_query($connection, $query);
                     ?>
                     <a href="<?php echo ROOT_URL ?>pages/category-posts.php?category=<?= $category["id"] ?>" class="category-button"><?= $category["title"] ?></a>
                     <p class="new-post-body category-post-body">
-                        <a href="<?php echo ROOT_URL ?>pages/post.php?=<?= $post["id"] ?>">
+                        <a href="<?php echo ROOT_URL ?>pages/post.php?id=<?= $post["id"] ?>">
                             <?= substr($post["subtitle"], 0, 150) ?>...
                         </a>
                     </p>

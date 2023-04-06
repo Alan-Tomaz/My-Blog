@@ -1,3 +1,32 @@
+//popup variable declaration
+let popup = [];
+
+//show a confirm message
+function showConfirmMessage(i) {
+    popup[i] = document.getElementById("popup" + i);
+    popup[i].classList.add("open-popup");
+}
+
+//hide the confirm message
+function hideConfirmMessage(i) {
+    popup[i] = document.getElementById("popup" + i);
+    popup[i].classList.remove("open-popup");
+}
+
+
+let popupComment = [];
+//show the confirm message in the comment section
+function showConfirmMessageComment(i) {
+    popupComment[i] = document.getElementById("popup-comment-section" + i);
+    popupComment[i].classList.add("open-popup-comment-section");
+}
+
+//hide the confirm message in the comment section
+function hideConfirmMessageComment(i) {
+    popupComment[i] = document.getElementById("popup-comment-section" + i);
+    popupComment[i].classList.remove("open-popup-comment-section");
+}
+
 const navItems = document.querySelector(".nav-items-right");
 const openNavBtn = document.querySelector("#open-nav-btn");
 const closeNavBtn = document.querySelector("#close-nav-btn");
@@ -38,17 +67,3 @@ const HideSidebar = () => {
 
 showSidebarBtn.addEventListener('click', ShowSidebar);
 hideSidebarBtn.addEventListener('click', HideSidebar);
-
-//show a confirm message
-let popup = [];
-
-function showConfirmMessage(i) {
-    popup[i] = document.getElementById("popup" + i);
-    popup[i].classList.add("open-popup");
-}
-
-//hide the confirm message
-function hideConfirmMessage(i) {
-    popup[i] = document.getElementById("popup" + i);
-    popup[i].classList.remove("open-popup");
-}

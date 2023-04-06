@@ -132,10 +132,10 @@ $i = 1;
                             }
                             ?>
                             <tr>
-                                <td><?= $post["title"] ?></td>
-                                <td><?= $category["title"] ?></td>
+                                <td><a href="<?= ROOT_URL ?>pages/post.php?id=<?= $post["id"] ?>" class="user-page-link"><?= $post["title"] ?></a></td>
+                                <td><a href="<?= ROOT_URL ?>pages/category-posts.php?category=<?= $categoryId ?>" class="user-page-link"><?= $category["title"] ?></a></td>
                                 <?php if (isset($_SESSION['user-is-admin'])) : ?>
-                                    <td><?= $author["firstname"] . " " . $author["lastname"] ?></td>
+                                    <td><a href="<?= ROOT_URL ?>pages/user-page.php?user=<?= $author["username"] ?>" class="user-page-link"><?= $author["firstname"] . " " . $author["lastname"] ?></a></td>
                                 <?php endif ?>
                                 <td><a href="<?php echo ROOT_URL ?>admin/pages/edit-post.php?id=<?= $post['id'] ?>" class="btn sm">Edit</a></td>
                                 <td><a class="btn sm danger" onclick="showConfirmMessage(<?= $i ?>)">Delete</a></td>
